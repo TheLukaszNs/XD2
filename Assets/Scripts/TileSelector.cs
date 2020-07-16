@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public class TileSelector : MonoBehaviour
@@ -17,13 +16,11 @@ public class TileSelector : MonoBehaviour
 
     public GameObject[] buildings;
 
-    // Start is called before the first frame update
     void Start()
     {
         tilemap = GetComponent<Tilemap>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckSelection();
@@ -32,7 +29,7 @@ public class TileSelector : MonoBehaviour
 
     void OpenMenu()
     {
-        if(!menuOpened)
+        if (!menuOpened)
             markerSprite.gameObject.SetActive(false);
         else
             markerSprite.gameObject.SetActive(true);
@@ -40,27 +37,11 @@ public class TileSelector : MonoBehaviour
 
     void CheckSelection()
     {
-        /*if (Input.touchCount == 1) 
-        {
-            Touch touch = Input.GetTouch(0);
-
-            while (touch.phase == TouchPhase.Began)
-            {
-                timer -= Time.deltaTime;
-
-                if (timer <= 0)
-                {
-                    Debug.Log("open menu");
-                    break;
-                }
-            }
-
-            timer = 1.5f;
-        }*/
-
         if (CheckIfInsideTilemap())
         {
-            if (Input.GetMouseButton(0))
+            RaycastHit2D click = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            if (Input.GetMouseButton(0) && click.collider.tag != "IgnoreField")
             {
                 if (timer <= 0)
                 {
@@ -71,7 +52,6 @@ public class TileSelector : MonoBehaviour
 
                     if (!staticMenu)
                     {
-                        Marker.transform.position = tilemap.GetCellCenterWorld(tileIndex);
                         markerSprite.position = tilemap.GetCellCenterWorld(tileIndex);
                         staticMenu = true;
                     }
@@ -81,14 +61,6 @@ public class TileSelector : MonoBehaviour
                     timer -= Time.deltaTime;
                 }
             }
-            else
-            {
-                timer = 0.5f;
-                menuOpened = false;
-                staticMenu = false;
-            }
-
-            RaycastHit2D click = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
             if (Input.GetMouseButtonUp(0))
             {
@@ -96,6 +68,10 @@ public class TileSelector : MonoBehaviour
                 {
                     click.collider.gameObject.GetComponent<Button>().onClick.Invoke();
                 }
+
+                timer = 0.5f;
+                menuOpened = false;
+                staticMenu = false;
             }
         }
     }
@@ -104,7 +80,7 @@ public class TileSelector : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-        if (hit.collider != null)  
+        if (hit.collider != null)
         {
             if (hit.collider.isTrigger)
             {
@@ -126,4 +102,3 @@ public class TileSelector : MonoBehaviour
         Instantiate(buildings[index], Marker.transform.position, Quaternion.identity);
     }
 }
-
