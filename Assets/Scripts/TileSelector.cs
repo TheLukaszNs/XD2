@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Timeline;
+using UnityEngine.UI;
 
 public class TileSelector : MonoBehaviour
 {
@@ -9,9 +9,13 @@ public class TileSelector : MonoBehaviour
     [SerializeField]
     private Transform markerSprite;
     [SerializeField]
+    private GameObject Marker;
+    [SerializeField]
     private float timer = 0.5f;
     [SerializeField]
-    private bool menuOpened = false;
+    private bool menuOpened = false, staticMenu = false;
+
+    public GameObject[] buildings;
 
     // Start is called before the first frame update
     void Start()
@@ -54,26 +58,72 @@ public class TileSelector : MonoBehaviour
             timer = 1.5f;
         }*/
 
-        if (Input.GetMouseButton(0))
+        if (CheckIfInsideTilemap())
         {
-            if (timer <= 0)
+            if (Input.GetMouseButton(0))
             {
-                menuOpened = true;
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                if (timer <= 0)
+                {
+                    menuOpened = true;
+                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                Vector3Int tileIndex = tilemap.WorldToCell(worldPos);
-                markerSprite.position = tilemap.GetCellCenterWorld(tileIndex);
+                    Vector3Int tileIndex = tilemap.WorldToCell(worldPos);
+
+                    if (!staticMenu)
+                    {
+                        Marker.transform.position = tilemap.GetCellCenterWorld(tileIndex);
+                        markerSprite.position = tilemap.GetCellCenterWorld(tileIndex);
+                        staticMenu = true;
+                    }
+                }
+                else
+                {
+                    timer -= Time.deltaTime;
+                }
             }
             else
             {
-                timer -= Time.deltaTime;
+                timer = 0.5f;
+                menuOpened = false;
+                staticMenu = false;
+            }
+
+            RaycastHit2D click = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (click.collider.tag == "Button")
+                {
+                    click.collider.gameObject.GetComponent<Button>().onClick.Invoke();
+                }
+            }
+        }
+    }
+
+    private bool CheckIfInsideTilemap()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+        if (hit.collider != null)  
+        {
+            if (hit.collider.isTrigger)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         else
         {
-            timer = 0.5f;
-            menuOpened = false;
+            return false;
         }
+    }
+
+    public void ChooseAction(int index)
+    {
+        Instantiate(buildings[index], Marker.transform.position, Quaternion.identity);
     }
 }
 
