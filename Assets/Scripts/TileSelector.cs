@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class TileSelector : MonoBehaviour
 {
@@ -9,17 +8,19 @@ public class TileSelector : MonoBehaviour
     [SerializeField]
     private Transform markerSprite;
     [SerializeField]
+    private GameObject Marker;
+    [SerializeField]
     private float timer = 0.5f;
     [SerializeField]
-    private bool menuOpened = false;
+    private bool menuOpened = false, staticMenu = false;
 
-    // Start is called before the first frame update
+    public GameObject[] buildings;
+
     void Start()
     {
         tilemap = GetComponent<Tilemap>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckSelection();
@@ -28,7 +29,7 @@ public class TileSelector : MonoBehaviour
 
     void OpenMenu()
     {
-        if(!menuOpened)
+        if (!menuOpened)
             markerSprite.gameObject.SetActive(false);
         else
             markerSprite.gameObject.SetActive(true);
@@ -36,44 +37,68 @@ public class TileSelector : MonoBehaviour
 
     void CheckSelection()
     {
-        /*if (Input.touchCount == 1) 
+        if (CheckIfInsideTilemap())
         {
-            Touch touch = Input.GetTouch(0);
+            RaycastHit2D click = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-            while (touch.phase == TouchPhase.Began)
+            if (Input.GetMouseButton(0) && click.collider.tag != "IgnoreField")
             {
-                timer -= Time.deltaTime;
-
                 if (timer <= 0)
                 {
-                    Debug.Log("open menu");
-                    break;
+                    menuOpened = true;
+                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                    Vector3Int tileIndex = tilemap.WorldToCell(worldPos);
+
+                    if (!staticMenu)
+                    {
+                        markerSprite.position = tilemap.GetCellCenterWorld(tileIndex);
+                        staticMenu = true;
+                    }
+                }
+                else
+                {
+                    timer -= Time.deltaTime;
                 }
             }
 
-            timer = 1.5f;
-        }*/
-
-        if (Input.GetMouseButton(0))
-        {
-            if (timer <= 0)
+            if (Input.GetMouseButtonUp(0))
             {
-                menuOpened = true;
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                if (click.collider.tag == "Button")
+                {
+                    click.collider.gameObject.GetComponent<Button>().onClick.Invoke();
+                }
 
-                Vector3Int tileIndex = tilemap.WorldToCell(worldPos);
-                markerSprite.position = tilemap.GetCellCenterWorld(tileIndex);
+                timer = 0.5f;
+                menuOpened = false;
+                staticMenu = false;
+            }
+        }
+    }
+
+    private bool CheckIfInsideTilemap()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.isTrigger)
+            {
+                return true;
             }
             else
             {
-                timer -= Time.deltaTime;
+                return false;
             }
         }
         else
         {
-            timer = 0.5f;
-            menuOpened = false;
+            return false;
         }
     }
-}
 
+    public void ChooseAction(int index)
+    {
+        Instantiate(buildings[index], Marker.transform.position, Quaternion.identity);
+    }
+}
