@@ -43,3 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Layer UI
+    uniqueID: 2635355547
+    locked: 0
+  - name: Game Objects
+    uniqueID: 3481640023
+    locked: 0
+  - name: Top UI
+    uniqueID: 1269503341
+    locked: 0
