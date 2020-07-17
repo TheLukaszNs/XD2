@@ -4,41 +4,50 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Camera mainCamera;
+    [SerializeField] private Camera mainCamera;
 
-    private const float sensitivity = 50.0f;
+    [SerializeField] private float sensitivity = 50.0f;
+    [SerializeField] private float smoothSpeed = 8f;
 
-    // Start is called before the first frame update
+    private float newZoom;
+
+    private Vector3 newPosition;
+
     void Start()
     {
-        
+        newZoom = mainCamera.orthographicSize;
+        newPosition = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") < 0.0f && mainCamera.orthographicSize < 4.0f)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0.0f && newZoom < 4.0f)
         {
-            mainCamera.orthographicSize++;
+            newZoom++;
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f && mainCamera.orthographicSize > 2.0f)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0.0f && newZoom > 2.0f)
         {
-            mainCamera.orthographicSize--;
+            newZoom--;
         }
 
         float x = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float y = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
 
-        if (Input.GetMouseButton(2))
+        if (Input.GetMouseButton(1))
         {
-            transform.Translate(Vector3.down * y + Vector3.left * x);
+            newPosition += Vector3.down * y + Vector3.left * x;
         }
 
         if (Input.GetKey(KeyCode.F))
         {
             transform.position = Vector3.zero;
             mainCamera.orthographicSize = 3.0f;
+            newZoom = mainCamera.orthographicSize;
+            newPosition = transform.position;
         }
+
+        mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, newZoom, smoothSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, newPosition, smoothSpeed * Time.deltaTime);
     }
 }
