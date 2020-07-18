@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public GameObject MenuUI;
+
     [SerializeField] private Camera mainCamera;
 
     [SerializeField] private float sensitivity = 50.0f;
     [SerializeField] private float smoothSpeed = 8f;
+
+    [SerializeField] private Vector2 pivot;
 
     private float newZoom;
 
@@ -15,6 +19,8 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        pivot = MenuUI.GetComponent<RectTransform>().pivot;
+
         newZoom = mainCamera.orthographicSize;
         newPosition = transform.position;
     }
@@ -24,11 +30,13 @@ public class CameraController : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") < 0.0f && newZoom < 4.0f)
         {
             newZoom++;
+            pivot = new Vector2(0.5f, pivot.y - 0.15f);
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0.0f && newZoom > 2.0f)
         {
             newZoom--;
+            pivot = new Vector2(0.5f, pivot.y + 0.15f);
         }
 
         float x = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
@@ -49,5 +57,9 @@ public class CameraController : MonoBehaviour
 
         mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, newZoom, smoothSpeed * Time.deltaTime);
         transform.position = Vector3.Lerp(transform.position, newPosition, smoothSpeed * Time.deltaTime);
+
+        // MENU UI
+        MenuUI.transform.localScale = new Vector3(mainCamera.orthographicSize / 2, mainCamera.orthographicSize / 2, 1) * 0.8f;
+        MenuUI.GetComponent<RectTransform>().pivot = Vector2.Lerp(MenuUI.GetComponent<RectTransform>().pivot, pivot, smoothSpeed * Time.deltaTime);
     }
 }
