@@ -181,7 +181,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
 --- !u!223 &18704756
 Canvas:
   m_ObjectHideFlags: 0
@@ -315,7 +314,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
-    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -731,7 +729,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
-    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -920,7 +917,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
-    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -3236,6 +3232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31835bb1ece3a6c4f9f68418873861b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MenuUI: {fileID: 239108381}
   mainCamera: {fileID: 519420031}
   sensitivity: 50
   smoothSpeed: 8
+  pivot: {x: 0, y: 0}
