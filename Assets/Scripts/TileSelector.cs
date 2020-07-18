@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class TileSelector : MonoBehaviour
 {
+    public GameObject itemsParent;
+
     private Tilemap tilemap;
     [SerializeField]
     private Transform markerSprite;
@@ -99,6 +101,7 @@ public class TileSelector : MonoBehaviour
 
     public void ChooseAction(int index)
     {
-        Instantiate(buildings[index], Marker.transform.position, Quaternion.identity);
+        GameObject item = Instantiate(buildings[index], Marker.transform.position, Quaternion.identity);
+        item.transform.parent = itemsParent.transform;
     }
 }
