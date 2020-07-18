@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: maple-tree
+  m_Name: pine-tree
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 5072528693747974040, guid: 24ad613cf637a5b4e9cc2da8b49cf575, type: 3}
+  m_Sprite: {fileID: -2463172412468130191, guid: 24ad613cf637a5b4e9cc2da8b49cf575, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
