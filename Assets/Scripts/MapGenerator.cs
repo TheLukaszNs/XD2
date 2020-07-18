@@ -10,8 +10,6 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private Tree[] trees;
     [SerializeField] private int mapWidth, mapHeight;
 
-    [SerializeField] private float spawnTreshold;
-
     void Start()
     {
         Random.InitState(System.DateTime.Today.Millisecond);
