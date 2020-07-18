@@ -2,17 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public static class GameController
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public static Dictionary<Vector3Int, GameObject> PlacedObjects = new Dictionary<Vector3Int, GameObject>();
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
@@ -88,15 +89,9 @@ public class TileSelector : MonoBehaviour
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     public void ChooseAction(int index)
