@@ -17,6 +17,8 @@ public class TileSelector : MonoBehaviour
     [SerializeField]
     private bool menuOpened = false, staticMenu = false;
 
+    [SerializeField] private ForestManager forestManager;
+
     public GameObject[] buildings;
 
     void Start()
@@ -28,6 +30,8 @@ public class TileSelector : MonoBehaviour
     {
         CheckSelection();
         OpenMenu();
+
+
     }
 
     void OpenMenu()
@@ -50,6 +54,7 @@ public class TileSelector : MonoBehaviour
                 {
                     menuOpened = true;
                     Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    worldPos.z = 0;
 
                     Vector3Int tileIndex = tilemap.WorldToCell(worldPos);
 
@@ -67,6 +72,7 @@ public class TileSelector : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
+                Debug.Log(click.collider.gameObject.name);
                 if (click.collider.tag == "Button")
                 {
                     click.collider.gameObject.GetComponent<Button>().onClick.Invoke();
@@ -83,12 +89,9 @@ public class TileSelector : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-        if (hit.collider != null)
+        if (hit.collider != null && hit.collider.isTrigger)
         {
-            if (hit.collider.isTrigger)
-            {
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -96,6 +99,12 @@ public class TileSelector : MonoBehaviour
 
     public void ChooseAction(int index)
     {
+        Vector3Int pos = tilemap.WorldToCell(Marker.transform.position);
+        Debug.Log(pos);
+        if (index == 1)
+        {
+            forestManager.RemoveTree(pos);
+        }
         GameObject item = Instantiate(buildings[index], Marker.transform.position, Quaternion.identity);
         item.transform.parent = itemsParent.transform;
     }

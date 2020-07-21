@@ -210,7 +210,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18704753}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 220570965}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 44905127}
   - component: {fileID: 44905129}
   - component: {fileID: 44905130}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Button
   m_Icon: {fileID: 0}
@@ -381,6 +381,50 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.63, y: 0.63}
   m_EdgeRadius: 0
+--- !u!1 &177250640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 177250642}
+  - component: {fileID: 177250641}
+  m_Layer: 0
+  m_Name: ForestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &177250641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177250640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8809a7eb9b2397e4cb76bafb72c2397c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forestTilemap: {fileID: 886829130}
+--- !u!4 &177250642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177250640}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.03649165, y: 0.6157201, z: -1.8865451}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &220570964
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +518,6 @@ GameObject:
   - component: {fileID: 239108382}
   - component: {fileID: 239108384}
   - component: {fileID: 239108383}
-  - component: {fileID: 239108385}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -516,7 +559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -540,22 +583,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239108381}
   m_CullTransparentMesh: 0
---- !u!111 &239108385
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 239108381}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 4ec3a1255c822e14aab7f63609db6c97, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 4ec3a1255c822e14aab7f63609db6c97, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &276856335
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +596,7 @@ GameObject:
   - component: {fileID: 276856337}
   - component: {fileID: 276856339}
   - component: {fileID: 276856340}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: GameObject (1)
   m_TagString: Button
   m_Icon: {fileID: 0}
@@ -757,7 +784,7 @@ GameObject:
   - component: {fileID: 427182297}
   - component: {fileID: 427182299}
   - component: {fileID: 427182300}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: GameObject (2)
   m_TagString: Button
   m_Icon: {fileID: 0}
@@ -1064,6 +1091,7 @@ MonoBehaviour:
   timer: 0.5
   menuOpened: 0
   staticMenu: 0
+  forestManager: {fileID: 177250641}
   buildings:
   - {fileID: 1008163368328100747, guid: 6eb917fd5ccbfe1449fd49f2f113951d, type: 3}
   - {fileID: 3198717664835020379, guid: 6ffbd88cb4c9aeb4ca7c8b7941bc55bf, type: 3}
@@ -1133,11 +1161,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0
+  near clip plane: -10
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2
+  orthographic size: 2.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1161,7 +1189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1987576430}
@@ -1461,6 +1489,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1743839631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1743839633}
+  - component: {fileID: 1743839632}
+  m_Layer: 0
+  m_Name: Game Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1743839632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743839631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe29365550dd1a44f990e730909558b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forestManager: {fileID: 177250641}
+--- !u!4 &1743839633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743839631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.67489326, y: -2.679171, z: -2.7995486}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1773850044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,15 +1562,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447ff3af0bdbe1543a3474a26d18f750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forestTilemap: {fileID: 886829130}
   groundTilemap: {fileID: 470663635}
   groundTile: {fileID: 11400000, guid: 0025f3891441d3b47a380ed8174ded59, type: 2}
+  forestManager: {fileID: 177250641}
   trees:
   - name: Maple
     spawnThreshold: 0.3
     treeTile: {fileID: 11400000, guid: 4e652727b2d22ed4ea054d72b375081a, type: 2}
   - name: Pine
-    spawnThreshold: 0.5
+    spawnThreshold: 0.797
     treeTile: {fileID: 11400000, guid: 55a1dd2d7dec0c8458901a73db8adb92, type: 2}
   mapWidth: 20
   mapHeight: 20

@@ -5,10 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
-    [SerializeField] private Tilemap forestTilemap, groundTilemap;
+    [SerializeField] private Tilemap  groundTilemap;
     [SerializeField] private Tile groundTile;
+    [SerializeField] private ForestManager forestManager;
     [SerializeField] private Tree[] trees;
     [SerializeField] private int mapWidth, mapHeight;
+
 
     void Start()
     {
@@ -36,7 +38,7 @@ public class MapGenerator : MonoBehaviour
         {
             if(chanceOfSpawn < tree.spawnThreshold)
             {
-                forestTilemap.SetTile(pos, tree.treeTile);
+                forestManager.AddTree(pos, tree);
                 break;
             }
         }
